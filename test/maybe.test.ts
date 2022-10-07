@@ -52,7 +52,10 @@ describe('Monad Maybe Test Suite', () => {
     const result = maybe
       .map(() => null)
       .map((value) =>
-        value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+        (value as any).toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }),
       )
       .getOrElse('R$ 0,00')
 
@@ -81,5 +84,52 @@ describe('Monad Maybe Test Suite', () => {
     const expected = 0
 
     expect(result).toBe(expected)
+
+    const maybe_2 = Maybe.of(5)
+    const result_2 = maybe_2.map(() => null).getOrElse('R$ 0,00')
+
+    console.log(result_2)
+  })
+
+  it('should map an object and navigate from your properties', () => {
+    const user = {
+      name: 'John',
+      address: {
+        street: 'Baker street',
+        number: '221B',
+        city: 'London',
+      },
+    }
+
+    const monad = Maybe.of(user)
+    const result = monad
+      .map((user) => user.address)
+      .map((address) => address.city)
+      .map((city) => city)
+      .getOrElse('no-city')
+
+    expect(result).toBe(user.address.city)
+  })
+
+  it('should lift a Maybe when chain return a nested Maybe', () => {
+    const user = {
+      name: 'John',
+      address: {
+        street: 'Baker street',
+        number: '221B',
+        locale: {
+          city: 'london',
+        },
+      },
+    }
+
+    const monad = Maybe.of(user)
+    const result = monad
+      .map((user) => user.address)
+      .chain((address) => new Maybe(address.locale))
+      .map((locale) => locale.city)
+      .getOrElse('no-city')
+
+    expect(result).toBe(user.address.locale.city)
   })
 })

@@ -68,11 +68,11 @@ const result_1 = maybe_1
   .getOrElse('R$ 0,00')
 
 console.log(result_1)
-//=> 'R$ 5,00'
+//=> R$ 5,00
 
 const maybe_2 = Maybe.of(5)
 const result_2 = maybe_2.map(() => null).getOrElse('R$ 0,00')
 
 console.log(result_2)
-//=> 'R$ 5,00'
+//=> R$ 0,00
 ```

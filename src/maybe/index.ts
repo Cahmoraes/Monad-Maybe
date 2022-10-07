@@ -1,5 +1,5 @@
-type CallbackM<T> = (value: T) => any
-type CallbackChainM<T> = (value: T) => Maybe<any>
+type CallbackM<T, U> = (value: T) => U
+type CallbackChainM<T, U> = (value: T) => Maybe<U>
 
 export default class Maybe<T> {
   constructor(private value: T) {}
@@ -8,14 +8,14 @@ export default class Maybe<T> {
     return new Maybe<T>(value)
   }
 
-  public map(callbackMap: CallbackM<T>): Maybe<T> {
-    if (this.isEmpty()) return Maybe.of(null) as Maybe<T>
+  public map<U>(callbackMap: CallbackM<T, U>): Maybe<U> {
+    if (this.isEmpty()) return Maybe.of(null) as Maybe<U>
     return Maybe.of(callbackMap(this.value))
   }
 
-  public chain(callbackChain: CallbackChainM<T>): Maybe<T> {
-    const chained = this.map(callbackChain).join() as Maybe<T>
-    if (chained === null) return Maybe.of(null) as Maybe<T>
+  public chain<U>(callbackChain: CallbackChainM<T, U>): Maybe<U> {
+    const chained = this.map(callbackChain).join() as Maybe<U>
+    if (chained === null) return Maybe.of(null) as Maybe<U>
     return chained
   }
 
