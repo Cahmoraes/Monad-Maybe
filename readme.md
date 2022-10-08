@@ -1,6 +1,6 @@
 # Motivation
 
-This package creates Maybe Monads to work with values that may or may not exist.
+This package creates Maybe Monad to work with values that may or may not exist.
 
 ## Usage
 
