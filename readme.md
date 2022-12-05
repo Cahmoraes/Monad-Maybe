@@ -1,6 +1,7 @@
 # Motivation
 
 This package creates Maybe Monad to work with values that may or may not exist.
+Monad Maybe is a type safe to wrapping values and avoid the TypeError exceptions possibilities.
 
 ## Usage
 
