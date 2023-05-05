@@ -77,3 +77,14 @@ const result_2 = maybe_2.map(() => null).getOrElse('R$ 0,00')
 console.log(result_2)
 //=> R$ 0,00
 ```
+
+## to check if the Monad is Null or Undefined, use <strong>isNothing</strong>:
+
+this method return a boolean. True if the Monad is Null or Undefined, else false.
+
+```js
+const monad = Maybe.of(5).map(() => null)
+
+console.log(monad.isNothing())
+//=> true
+```

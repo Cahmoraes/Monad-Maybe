@@ -13,20 +13,22 @@ export default class Maybe<InitialType> {
     return new Maybe<T>(value)
   }
 
-  public map<U>(callbackMap: Callback<InitialType, U>): Maybe<U> {
-    if (this.isEmpty(this.value)) return Maybe.of(null) as Maybe<U>
+  public map<TransformedType>(
+    callbackMap: Callback<InitialType, TransformedType>,
+  ): Maybe<TransformedType> {
+    if (this.isNothing()) return Maybe.of(null) as Maybe<TransformedType>
     return Maybe.of(callbackMap(this.value))
   }
 
-  private isEmpty(aValue: unknown): boolean {
-    return aValue === null || aValue === undefined
+  public isNothing(): this is null | undefined {
+    return this.value === null || this.value === undefined
   }
 
   public chain<TransformedType>(
     callbackChain: CallbackChain<InitialType, TransformedType>,
   ): Maybe<TransformedType> {
     const chained = this.map(callbackChain).join() as Maybe<TransformedType>
-    if (this.isEmpty(chained)) return Maybe.of(null) as Maybe<TransformedType>
+    if (chained === null) return Maybe.of(null) as Maybe<TransformedType>
     return chained
   }
 
@@ -37,6 +39,6 @@ export default class Maybe<InitialType> {
   public getOrElse<OptionalType = InitialType>(
     defaultValue: OptionalType,
   ): InitialType | OptionalType {
-    return this.isEmpty(this.value) ? defaultValue : this.value
+    return this.isNothing() ? defaultValue : this.value
   }
 }

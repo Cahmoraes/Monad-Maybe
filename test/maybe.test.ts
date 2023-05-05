@@ -87,8 +87,7 @@ describe('Monad Maybe Test Suite', () => {
 
     const maybe_2 = Maybe.of(5)
     const result_2 = maybe_2.map(() => null).getOrElse('R$ 0,00')
-
-    console.log(result_2)
+    expect(result_2).toBe('R$ 0,00')
   })
 
   it('should map an object and navigate from your properties', () => {
@@ -131,5 +130,26 @@ describe('Monad Maybe Test Suite', () => {
       .getOrElse('no-city')
 
     expect(result).toBe(user.address.locale.city)
+  })
+
+  it('should return true when Monad value isNothing', () => {
+    const data = { username: 'John' }
+    const monad = Maybe.of(data)
+
+    expect(monad.isNothing()).toBe(false)
+
+    const nothingMonad = monad.map(() => null)
+
+    expect(monad.isNothing()).toBe(false)
+    expect(nothingMonad.isNothing()).toBe(true)
+
+    const chained = Maybe.of(data)
+      .chain((data) => Maybe.of(data))
+      .getOrElse({ username: 'caique' })
+
+    expect(chained).toEqual(data)
+
+    const isNothing = Maybe.of(5).map(() => null)
+    expect(isNothing.isNothing()).toBe(true)
   })
 })
