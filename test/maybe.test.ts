@@ -132,7 +132,7 @@ describe('Monad Maybe Test Suite', () => {
     expect(result).toBe(user.address.locale.city)
   })
 
-  it('should return true when Monad value isNothing', () => {
+  it('#isNothing should return true when Monad value is false', () => {
     const data = { username: 'John' }
     const monad = Maybe.of(data)
 
@@ -151,5 +151,51 @@ describe('Monad Maybe Test Suite', () => {
 
     const isNothing = Maybe.of(5).map(() => null)
     expect(isNothing.isNothing()).toBe(true)
+  })
+})
+
+describe('getSafe', () => {
+  it('should return an object containing property success with type of boolean', () => {
+    const data = { username: 'John' }
+    const monad = Maybe.of(data)
+
+    const userSafe = monad.getSafe()
+
+    expect(userSafe).toMatchObject({
+      success: expect.any(Boolean),
+    })
+  })
+
+  it('should return an object containing property success and its value to be true', () => {
+    const data = { username: 'John' }
+    const monad = Maybe.of(data)
+
+    const userSafe = monad.getSafe()
+
+    expect(userSafe).toMatchObject({
+      success: true,
+      data: expect.any(Object),
+    })
+  })
+
+  it('should return an object containing property data and its value to be Monad Value', () => {
+    const user = { username: 'John' }
+    const monad = Maybe.of(user).map((user) => ({
+      ...user,
+      username: 'George',
+    }))
+
+    const userSafe = monad.getSafe()
+
+    expect(userSafe).toMatchObject({
+      success: true,
+      data: {
+        username: 'George',
+      },
+    })
+
+    if (userSafe.success) {
+      expect(userSafe.data.username).toBe('George')
+    }
   })
 })

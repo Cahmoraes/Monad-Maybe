@@ -88,3 +88,27 @@ const monad = Maybe.of(5).map(() => null)
 console.log(monad.isNothing())
 //=> true
 ```
+
+## to get Monad's value without define default value "getOrElse", use getSafe::
+
+this method return a new Object containing a property called success of type of boolean.
+This object is a Discriminated Union. That's, if the success property was true, will there is a property data containing the Monad's value. Else, will there is no have the data property.
+
+In this case, the client should handle the case when don't have a valid value in the monad.
+
+```js
+const user = { username: 'John' }
+const monad = Maybe.of(user).map((user) => ({
+  ...user,
+  username: 'George',
+}))
+
+const userSafe = monad.getSafe()
+if (!userSafe.success) {
+  // handle when Monad's value is null.
+} else {
+  // handle when Monad's value is valid.
+}
+
+//=> true
+```

@@ -6,6 +6,19 @@ type CallbackChain<InitialType, TransformedType> = (
   value: InitialType,
 ) => Maybe<TransformedType>
 
+type GetSafeErrorReturn = {
+  success: false
+}
+
+type GetSafeSuccessReturn<InicialType> = {
+  success: true
+  data: InicialType
+}
+
+type GetSafeReturn<InicialType> =
+  | GetSafeSuccessReturn<InicialType>
+  | GetSafeErrorReturn
+
 export default class Maybe<InitialType> {
   constructor(private readonly value: InitialType) {}
 
@@ -40,5 +53,17 @@ export default class Maybe<InitialType> {
     defaultValue: OptionalType,
   ): InitialType | OptionalType {
     return this.isNothing() ? defaultValue : this.value
+  }
+
+  public getSafe(): GetSafeReturn<InitialType> {
+    if (this.isNothing()) {
+      return {
+        success: false,
+      }
+    }
+    return {
+      success: true,
+      data: this.value,
+    }
   }
 }
