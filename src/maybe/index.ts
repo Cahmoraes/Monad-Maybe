@@ -26,6 +26,10 @@ export default class Maybe<InitialType> {
     return new Maybe<T>(value)
   }
 
+  public static empty(): Maybe<any> {
+    return Maybe.of(null)
+  }
+
   public map<TransformedType>(
     callbackMap: Callback<InitialType, TransformedType>,
   ): Maybe<TransformedType> {

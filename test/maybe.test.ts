@@ -7,10 +7,19 @@ describe('Monad Maybe Test Suite', () => {
     expect(maybe).toBeInstanceOf(Maybe)
   })
 
-  describe('of', () => {
-    it('should return an Maybe instance when of static method', () => {
+  describe('Maybe.of', () => {
+    it('should return a Maybe instance when of static method', () => {
       const maybe = Maybe.of(0)
       expect(maybe).toBeInstanceOf(Maybe)
+    })
+  })
+
+  describe('Maybe.empty', () => {
+    it('should return a Maybe instance null', () => {
+      const maybe = Maybe.empty()
+
+      expect(maybe).toBeInstanceOf(Maybe)
+      expect(maybe.isNothing()).toBe(true)
     })
   })
 
@@ -206,6 +215,12 @@ describe('Monad Maybe Test Suite', () => {
       if (userSafe.success) {
         expect(userSafe.data.username).toBe('George')
       }
+    })
+
+    it('should return an object containing property success and its value to false', () => {
+      const monad = Maybe.empty()
+      const monadSafe = monad.getSafe()
+      expect(monadSafe.success).toBe(false)
     })
   })
 })
