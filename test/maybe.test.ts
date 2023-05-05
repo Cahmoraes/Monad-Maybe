@@ -1,4 +1,4 @@
-import { describe, it, expect, jest } from '@jest/globals'
+import { describe, it, expect, vi } from 'vitest'
 import { Maybe } from '../src'
 
 describe('Monad Maybe Test Suite', () => {
@@ -16,7 +16,7 @@ describe('Monad Maybe Test Suite', () => {
     const maybe = Maybe.of(0)
     const fn = (value: number) => value + 2
 
-    const callback = jest.fn().mockImplementation(fn as any)
+    const callback = vi.fn().mockImplementation(fn as any)
 
     const result = maybe.map(callback)
     const expected = { value: 2 }
@@ -66,7 +66,7 @@ describe('Monad Maybe Test Suite', () => {
     const maybe = Maybe.of(0)
     const fn = (value: number) => Maybe.of(value + 2)
 
-    const result = maybe.chain(fn).getOrElse(0)
+    const result = maybe.chain(fn).getOrElse('0')
     const expected = 2
 
     expect(result).toBe(expected)

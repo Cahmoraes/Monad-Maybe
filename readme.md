@@ -15,7 +15,7 @@ const maybe_2 = Maybe.of(0)
 
 ## to <strong>Map</strong> Monad value, use the map method:
 
-this method should return a new value, else the next map chaining will receives a nullable value
+this method should return a new value, else the next map chaining will receives a null value
 
 ```js
 const result = Maybe.of(5).map((monadValue) => monadValue * 2)
