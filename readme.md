@@ -23,7 +23,7 @@ Maybe.empty() return a Maybe with null wrapped. But its inference is "any" just 
 ```js
 const maybe = Maybe.empty()
 
-console.log(maybe.isNothing()) // true
+console.log(maybe.isEmpty()) // true
 //=> { value: 10 }
 ```
 
@@ -98,14 +98,14 @@ console.log(result_2)
 //=> R$ 0,00
 ```
 
-## to check if the Monad is Null or Undefined, use <strong>isNothing</strong>:
+## to check if the Monad is Null or Undefined, use <strong>isEmpty</strong>:
 
 this method return a boolean. True if the Monad is Null or Undefined, else false.
 
 ```js
 const monad = Maybe.of(5).map(() => null)
 
-console.log(monad.isNothing())
+console.log(monad.isEmpty())
 //=> true
 ```
 

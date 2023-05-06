@@ -19,7 +19,7 @@ describe('Monad Maybe Test Suite', () => {
       const maybe = Maybe.empty()
 
       expect(maybe).toBeInstanceOf(Maybe)
-      expect(maybe.isNothing()).toBe(true)
+      expect(maybe.isEmpty()).toBe(true)
     })
   })
 
@@ -149,17 +149,17 @@ describe('Monad Maybe Test Suite', () => {
     })
   })
 
-  describe('isNothing', () => {
-    it('#isNothing should return true when Monad value is false', () => {
+  describe('isEmpty', () => {
+    it('should return true when Monad value is false', () => {
       const data = { username: 'John' }
       const monad = Maybe.of(data)
 
-      expect(monad.isNothing()).toBe(false)
+      expect(monad.isEmpty()).toBe(false)
 
       const nothingMonad = monad.map(() => null)
 
-      expect(monad.isNothing()).toBe(false)
-      expect(nothingMonad.isNothing()).toBe(true)
+      expect(monad.isEmpty()).toBe(false)
+      expect(nothingMonad.isEmpty()).toBe(true)
 
       const chained = Maybe.of(data)
         .chain((data) => Maybe.of(data))
@@ -168,7 +168,7 @@ describe('Monad Maybe Test Suite', () => {
       expect(chained).toEqual(data)
 
       const isNothing = Maybe.of(5).map(() => null)
-      expect(isNothing.isNothing()).toBe(true)
+      expect(isNothing.isEmpty()).toBe(true)
     })
   })
 
