@@ -37,7 +37,7 @@ export default class Maybe<InitialType> {
     return Maybe.of(callbackMap(this.value))
   }
 
-  public isNothing(): this is null | undefined {
+  public isNothing(): boolean {
     return this.value === null || this.value === undefined
   }
 
