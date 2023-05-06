@@ -14,7 +14,7 @@ declare class Maybe<InitialType> {
     static of<T>(value: T): Maybe<T>;
     static empty(): Maybe<any>;
     map<TransformedType>(callbackMap: Callback<InitialType, TransformedType>): Maybe<TransformedType>;
-    isNothing(): this is null | undefined;
+    isNothing(): boolean;
     chain<TransformedType>(callbackChain: CallbackChain<InitialType, TransformedType>): Maybe<TransformedType>;
     private join;
     getOrElse<OptionalType = InitialType>(defaultValue: OptionalType): InitialType | OptionalType;
