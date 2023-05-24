@@ -149,7 +149,7 @@ describe('Monad Maybe Test Suite', () => {
     })
   })
 
-  describe('isEmpty', () => {
+  describe('isNothing', () => {
     it('should return true when Monad value is false', () => {
       const data = { username: 'John' }
       const monad = Maybe.of(data)
