@@ -33,24 +33,22 @@ export default class Maybe<InitialType> {
   public map<TransformedType>(
     callbackMap: Callback<InitialType, TransformedType>,
   ): Maybe<TransformedType> {
-    if (this.isNothing()) return Maybe.of(null) as Maybe<TransformedType>
+    if (this.isNothing()) return Maybe.empty()
     return Maybe.of(callbackMap(this.value))
   }
 
-  public isNothing(): this is Maybe<null> {
+  public isNothing(): boolean {
     return this.value === null || this.value === undefined
   }
 
   public chain<TransformedType>(
     callbackChain: CallbackChain<InitialType, TransformedType>,
   ): Maybe<TransformedType> {
-    const chained = this.map(callbackChain).join() as Maybe<TransformedType>
-    if (chained === null) return Maybe.of(null) as Maybe<TransformedType>
-    return chained
+    return this.map(callbackChain).join()
   }
 
-  private join(): InitialType {
-    return this.value
+  private join() {
+    return this.isNothing() ? Maybe.empty() : this.value
   }
 
   public orDefault<DefaultType = InitialType>(
