@@ -23,7 +23,7 @@ Maybe.empty() return a Maybe with null wrapped. But its inference is "any" just 
 ```js
 const maybe = Maybe.empty()
 
-console.log(maybe.isEmpty()) // true
+console.log(maybe.isNothing()) // true
 //=> { value: 10 }
 ```
 
@@ -57,19 +57,19 @@ console.log(result)
 //=> { value: 20 }
 ```
 
-## to <strong>Retrieve</strong> Monad value, use the getOrElse method:
+## to <strong>Retrieve</strong> Monad value, use the orDefault method:
 
-the getOrElse method is receives a default value that is returned when the Monad value is null or undefined.
+the orDefault method is receives a default value that is returned when the Monad value is null or undefined.
 
 ```js
 const result_1 = Maybe.of(5)
   .map(() => null)
-  .getOrElse(0)
+  .orDefault(0)
 
 console.log(result_1)
 //=> 0
 
-const result_2 = Maybe.of(5).getOrElse(0)
+const result_2 = Maybe.of(5).orDefault(0)
 
 console.log(result_2)
 //=> 5
@@ -86,30 +86,30 @@ const result_1 = maybe_1
   .map((value) =>
     value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
   )
-  .getOrElse('R$ 0,00')
+  .orDefault('R$ 0,00')
 
 console.log(result_1)
 //=> R$ 5,00
 
 const maybe_2 = Maybe.of(5)
-const result_2 = maybe_2.map(() => null).getOrElse('R$ 0,00')
+const result_2 = maybe_2.map(() => null).orDefault('R$ 0,00')
 
 console.log(result_2)
 //=> R$ 0,00
 ```
 
-## to check if the Monad is Null or Undefined, use <strong>isEmpty</strong>:
+## to check if the Monad is Null or Undefined, use <strong>isNothing</strong>:
 
 this method return a boolean. True if the Monad is Null or Undefined, else false.
 
 ```js
 const monad = Maybe.of(5).map(() => null)
 
-console.log(monad.isEmpty())
+console.log(monad.isNothing())
 //=> true
 ```
 
-## to get Monad's value without define default value "getOrElse", use getSafe::
+## to get Monad's value without define default value "orDefault", use getSafe::
 
 this method return a new Object containing a property called success of type of boolean.
 This object is a Discriminated Union. That's, if the success property was true, will there is a property data containing the Monad's value. Else, will there is no have the data property.

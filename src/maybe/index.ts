@@ -33,11 +33,11 @@ export default class Maybe<InitialType> {
   public map<TransformedType>(
     callbackMap: Callback<InitialType, TransformedType>,
   ): Maybe<TransformedType> {
-    if (this.isEmpty()) return Maybe.of(null) as Maybe<TransformedType>
+    if (this.isNothing()) return Maybe.of(null) as Maybe<TransformedType>
     return Maybe.of(callbackMap(this.value))
   }
 
-  public isEmpty(): this is Maybe<null> {
+  public isNothing(): this is Maybe<null> {
     return this.value === null || this.value === undefined
   }
 
@@ -53,14 +53,14 @@ export default class Maybe<InitialType> {
     return this.value
   }
 
-  public getOrElse<DefaultType = InitialType>(
+  public orDefault<DefaultType = InitialType>(
     defaultValue: DefaultType,
   ): InitialType | DefaultType {
-    return this.isEmpty() ? defaultValue : this.value
+    return this.isNothing() ? defaultValue : this.value
   }
 
   public getSafe(): GetSafeReturn<InitialType> {
-    if (this.isEmpty()) {
+    if (this.isNothing()) {
       return {
         success: false,
       }
