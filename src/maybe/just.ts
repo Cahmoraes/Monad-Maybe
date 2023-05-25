@@ -39,10 +39,12 @@ export class Just<Type> implements Maybe<Type> {
     callbackChain: CallbackChain<Type, TransformedType>,
   ): Maybe<TransformedType> {
     const result = callbackChain(this._value)
-    return this.test(result) ? nothing() : result
+    return this.testMonadValue(result) ? nothing() : result
   }
 
-  private test<TransformedType>(aMonad: Maybe<TransformedType>): boolean {
+  private testMonadValue<TransformedType>(
+    aMonad: Maybe<TransformedType>,
+  ): boolean {
     const resultSafe = aMonad.getSafe()
     if (!resultSafe.success) return false
     return this.isEmpty(resultSafe.data)
