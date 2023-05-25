@@ -1,3 +1,12 @@
+declare class Nothing implements Maybe<Nothing> {
+    private _value;
+    orDefault<DefaultType>(defaultValue: DefaultType): DefaultType;
+    map<TransformedType>(_: Callback<never, TransformedType>): Maybe<TransformedType>;
+    isNothing(): this is Nothing;
+    chain<TransformedType>(_: CallbackChain<never, TransformedType>): Maybe<TransformedType>;
+    getSafe(): GetSafeReturn<never>;
+}
+
 type Callback<InitialType, TransformedType> = (value: InitialType) => TransformedType;
 type CallbackChain<InitialType, TransformedType> = (value: InitialType) => Maybe<TransformedType>;
 type GetSafeErrorReturn = {
@@ -8,17 +17,18 @@ type GetSafeSuccessReturn<InicialType> = {
     data: InicialType;
 };
 type GetSafeReturn<InicialType> = GetSafeSuccessReturn<InicialType> | GetSafeErrorReturn;
-declare class Maybe<InitialType> {
-    private readonly value;
-    constructor(value: InitialType);
-    static of<T>(value: T): Maybe<T>;
-    static empty(): Maybe<any>;
+interface Maybe<InitialType> {
     map<TransformedType>(callbackMap: Callback<InitialType, TransformedType>): Maybe<TransformedType>;
-    isEmpty(): this is Maybe<null>;
+    isNothing(): this is Nothing;
     chain<TransformedType>(callbackChain: CallbackChain<InitialType, TransformedType>): Maybe<TransformedType>;
-    private join;
-    getOrElse<DefaultType = InitialType>(defaultValue: DefaultType): InitialType | DefaultType;
+    orDefault<DefaultType = InitialType>(defaultValue: DefaultType): DefaultType;
+    orDefault(defaultValue: InitialType): InitialType;
     getSafe(): GetSafeReturn<InitialType>;
 }
 
-export { Maybe };
+declare class MaybeImp {
+    static of<Type>(value: Type): Maybe<Type>;
+    static empty<Type>(): Maybe<Type>;
+}
+
+export { MaybeImp as Maybe };
