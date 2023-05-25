@@ -228,4 +228,20 @@ describe('Monad Maybe Test Suite', () => {
       expect(monadSafe.success).toBe(false)
     })
   })
+
+  describe('orDefaultLazy', () => {
+    it('should return the result of the function passed by parameter when Monad is Nothing', () => {
+      const maybe_1 = Maybe.empty()
+      const result = maybe_1.orDefaultLazy(() => 1)
+
+      expect(result).toBe(1)
+    })
+
+    it('should return the result of the Monad, ignoring the function passed by parameter, when Monad is Just', () => {
+      const maybe_1 = Maybe.of(3)
+      const result = maybe_1.orDefaultLazy(() => 1)
+
+      expect(result).toBe(3)
+    })
+  })
 })

@@ -1,10 +1,16 @@
-import type { Callback, CallbackChain, GetSafeReturn, Maybe } from './maybe'
+import type {
+  Callback,
+  CallbackChain,
+  CallbackDefaultLazy,
+  GetSafeReturn,
+  Maybe,
+} from './maybe'
 
 export class Nothing implements Maybe<Nothing> {
-  private _value!: never
+  private value!: never
 
-  public orDefault<DefaultType>(defaultValue: DefaultType): DefaultType {
-    return defaultValue
+  public isNothing(): this is Nothing {
+    return true
   }
 
   public map<TransformedType>(
@@ -13,14 +19,18 @@ export class Nothing implements Maybe<Nothing> {
     return nothing()
   }
 
-  public isNothing(): this is Nothing {
-    return true
-  }
-
   public chain<TransformedType>(
     _: CallbackChain<never, TransformedType>,
   ): Maybe<TransformedType> {
     return nothing()
+  }
+
+  public orDefault<DefaultType>(defaultValue: DefaultType): DefaultType {
+    return defaultValue
+  }
+
+  public orDefaultLazy<T>(callbackDefaultLazy: CallbackDefaultLazy<T>): T {
+    return callbackDefaultLazy()
   }
 
   public getSafe(): GetSafeReturn<never> {

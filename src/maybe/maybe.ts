@@ -12,14 +12,16 @@ export type GetSafeErrorReturn = {
   success: false
 }
 
-export type GetSafeSuccessReturn<InicialType> = {
+export type GetSafeSuccessReturn<InitialType> = {
   success: true
-  data: InicialType
+  data: InitialType
 }
 
-export type GetSafeReturn<InicialType> =
-  | GetSafeSuccessReturn<InicialType>
+export type GetSafeReturn<InitialType> =
+  | GetSafeSuccessReturn<InitialType>
   | GetSafeErrorReturn
+
+export type CallbackDefaultLazy<InitialType> = () => InitialType
 
 export interface Maybe<InitialType> {
   map<TransformedType>(
@@ -34,6 +36,10 @@ export interface Maybe<InitialType> {
 
   orDefault<DefaultType = InitialType>(defaultValue: DefaultType): DefaultType
   orDefault(defaultValue: InitialType): InitialType
+
+  orDefaultLazy(
+    callbackDefaultLazy: CallbackDefaultLazy<InitialType>,
+  ): InitialType
 
   getSafe(): GetSafeReturn<InitialType>
 }
