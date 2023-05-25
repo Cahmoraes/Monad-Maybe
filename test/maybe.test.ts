@@ -166,7 +166,9 @@ describe('Monad Maybe Test Suite', () => {
 
       const chained = Maybe.of(data)
         .chain((data) => Maybe.of(data))
-        .orDefault({ username: 'caique' })
+        .orDefault({
+          username: 'John',
+        })
 
       expect(chained).toEqual(data)
 
