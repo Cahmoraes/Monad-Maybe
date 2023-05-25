@@ -7,8 +7,6 @@ import type {
 } from './maybe'
 
 export class Nothing implements Maybe<Nothing> {
-  private value!: never
-
   public isNothing(): this is Nothing {
     return true
   }
@@ -25,6 +23,10 @@ export class Nothing implements Maybe<Nothing> {
     return nothing()
   }
 
+  public filter<Type>(_: never): Maybe<Type> {
+    return nothing()
+  }
+
   public orDefault<DefaultType>(defaultValue: DefaultType): DefaultType {
     return defaultValue
   }
@@ -37,10 +39,6 @@ export class Nothing implements Maybe<Nothing> {
     return {
       success: false,
     }
-  }
-
-  public filter<Type>(_: never): Maybe<Type> {
-    return nothing()
   }
 }
 
