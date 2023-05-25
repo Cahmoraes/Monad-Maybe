@@ -258,6 +258,7 @@ describe('Monad Maybe Test Suite', () => {
       const result = maybe.filter((value) => value > 10)
 
       expect(result).toBeInstanceOf(Nothing)
+      expect(result.isNothing()).toBe(true)
     })
   })
 })
