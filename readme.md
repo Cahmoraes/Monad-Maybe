@@ -8,11 +8,9 @@ Monad Maybe is a type safe to wrapping values and avoid the TypeError exceptions
 to create monad Maybe, use:
 
 ```js
-const maybe_1 = new Maybe(0)
+const maybe_1 = Maybe.of(0)
 // or
-const maybe_2 = Maybe.of(0)
-// or
-const maybe_3 = Maybe.empty()
+const maybe_2 = Maybe.empty()
 ```
 
 ## to create an empty Maybe, use static method Maybe.empty()
@@ -24,7 +22,6 @@ Maybe.empty() return a Maybe with null wrapped. But its inference is "any" just 
 const maybe = Maybe.empty()
 
 console.log(maybe.isNothing()) // true
-//=> { value: 10 }
 ```
 
 Maybe.empty() causes TypeScript's type checking to ignore the initial state type:
@@ -57,7 +54,7 @@ console.log(result)
 //=> { value: 20 }
 ```
 
-## to <strong>Retrieve</strong> Monad value, use the orDefault method:
+## to <strong>get</strong> Monad value, use the orDefault method:
 
 the orDefault method is receives a default value that is returned when the Monad value is null or undefined.
 
@@ -109,7 +106,7 @@ console.log(monad.isNothing())
 //=> true
 ```
 
-## to get Monad's value without define default value "orDefault", use getSafe::
+## to get Monad's value without define default value "orDefault", use getSafe:
 
 this method return a new Object containing a property called success of type of boolean.
 This object is a Discriminated Union. That's, if the success property was true, will there is a property data containing the Monad's value. Else, will there is no have the data property.
@@ -129,6 +126,29 @@ if (!userSafe.success) {
 } else {
   // handle when Monad's value is valid.
 }
+```
 
-//=> true
+## to get Monad's value using lazy default evaluation, use orDefaultLazy:
+
+this method returns Monad's value if it was Nothing.
+
+```js
+const result = Maybe.empty().orDefaultLazy(() => ({
+  username: 'George',
+}))
+
+console.log(result)
+// => { username: 'George' }
+```
+
+## to filter Monad's value using a predicate, use filter:
+
+this method returns new Monad valid with your value if predicate is true, or empty Monad if predicate is false.
+
+```js
+const maybe = Maybe.of(5)
+const result = maybe.filter((value) => value > 10)
+
+console.(result.isNothing())
+// => true
 ```
