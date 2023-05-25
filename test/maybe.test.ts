@@ -1,16 +1,19 @@
 import { describe, it, expect, vi } from 'vitest'
-import { Maybe } from '../src'
+import Maybe from '../src/maybe/maybe-imp'
+import { Just } from '../src/maybe/just'
+import { Nothing } from '../src/maybe/nothing'
+// import { Maybe } from '../src'
 
 describe('Monad Maybe Test Suite', () => {
   it('should return an Maybe instance when use new operator', () => {
-    const maybe = new Maybe(0)
-    expect(maybe).toBeInstanceOf(Maybe)
+    const maybe = Maybe.of(0)
+    expect(maybe).toBeInstanceOf(Just)
   })
 
   describe('Maybe.of', () => {
     it('should return a Maybe instance when of static method', () => {
       const maybe = Maybe.of(0)
-      expect(maybe).toBeInstanceOf(Maybe)
+      expect(maybe).toBeInstanceOf(Just)
     })
   })
 
@@ -18,7 +21,7 @@ describe('Monad Maybe Test Suite', () => {
     it('should return a Maybe instance null', () => {
       const maybe = Maybe.empty()
 
-      expect(maybe).toBeInstanceOf(Maybe)
+      expect(maybe).toBeInstanceOf(Nothing)
       expect(maybe.isNothing()).toBe(true)
     })
   })
@@ -80,7 +83,7 @@ describe('Monad Maybe Test Suite', () => {
     })
 
     it('should return default value when trying map a null value', () => {
-      const maybe = new Maybe(5)
+      const maybe = Maybe.of(5)
       const expected = 'R$ 0,00'
 
       const result = maybe
@@ -141,7 +144,7 @@ describe('Monad Maybe Test Suite', () => {
       const monad = Maybe.of(user)
       const result = monad
         .map((user) => user.address)
-        .chain((address) => new Maybe(address.locale))
+        .chain((address) => Maybe.of(address.locale))
         .map((locale) => locale.city)
         .orDefault('no-city')
 
