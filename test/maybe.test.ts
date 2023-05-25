@@ -244,4 +244,20 @@ describe('Monad Maybe Test Suite', () => {
       expect(result).toBe(3)
     })
   })
+
+  describe('filter', () => {
+    it('should return Just predicate returns true', () => {
+      const maybe = Maybe.of(5)
+      const result = maybe.filter((value) => value > 3)
+
+      expect(result).toBeInstanceOf(Just)
+    })
+
+    it('should return Nothing when predicate returns false', () => {
+      const maybe = Maybe.of(5)
+      const result = maybe.filter((value) => value > 10)
+
+      expect(result).toBeInstanceOf(Nothing)
+    })
+  })
 })

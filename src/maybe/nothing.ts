@@ -38,6 +38,10 @@ export class Nothing implements Maybe<Nothing> {
       success: false,
     }
   }
+
+  public filter<Type>(_: never): Maybe<Type> {
+    return nothing()
+  }
 }
 
 export function nothing(): Nothing {

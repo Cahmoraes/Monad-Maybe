@@ -23,6 +23,10 @@ export type GetSafeReturn<InitialType> =
 
 export type CallbackDefaultLazy<InitialType> = () => InitialType
 
+export type CallbackPredicate<InitialType, NextType extends InitialType> = (
+  value: InitialType,
+) => value is NextType
+
 export interface Maybe<InitialType> {
   map<TransformedType>(
     callbackMap: Callback<InitialType, TransformedType>,
@@ -42,4 +46,9 @@ export interface Maybe<InitialType> {
   ): InitialType
 
   getSafe(): GetSafeReturn<InitialType>
+
+  filter<NextType extends InitialType>(
+    pred: CallbackPredicate<InitialType, NextType>,
+  ): Maybe<NextType>
+  filter(pred: (value: InitialType) => boolean): Maybe<InitialType>
 }
