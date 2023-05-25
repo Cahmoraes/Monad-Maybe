@@ -175,6 +175,18 @@ describe('Monad Maybe Test Suite', () => {
       const isNothing = Maybe.of(5).map(() => null)
       expect(isNothing.isNothing()).toBe(true)
     })
+
+    it('should return Just when Monad value is empty', () => {
+      const data = { username: 'John' }
+      const monad = Maybe.of(data).chain(() => Maybe.of(null))
+      expect(monad.orDefault(10)).toBe(10)
+    })
+
+    it('should return Just when Monad is Nothing', () => {
+      const data = { username: 'John' }
+      const monad = Maybe.of(data).chain(() => Maybe.empty())
+      expect(monad.orDefault(10)).toBe(10)
+    })
   })
 
   describe('getSafe', () => {
@@ -259,6 +271,12 @@ describe('Monad Maybe Test Suite', () => {
 
       expect(result).toBeInstanceOf(Nothing)
       expect(result.isNothing()).toBe(true)
+    })
+
+    it('should return Nothing when Monad is Nothing', () => {
+      const maybe = Maybe.empty()
+      const result = maybe.filter(() => true)
+      expect(result).toBeInstanceOf(Nothing)
     })
   })
 })
