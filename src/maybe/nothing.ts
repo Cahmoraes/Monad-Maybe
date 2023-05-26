@@ -31,7 +31,9 @@ export class Nothing implements Maybe<Nothing> {
     return defaultValue
   }
 
-  public orDefaultLazy<T>(callbackDefaultLazy: CallbackDefaultLazy<T>): T {
+  public orDefaultLazy<DefaultType>(
+    callbackDefaultLazy: CallbackDefaultLazy<DefaultType>,
+  ): DefaultType {
     return callbackDefaultLazy()
   }
 
@@ -39,6 +41,13 @@ export class Nothing implements Maybe<Nothing> {
     return {
       success: false,
     }
+  }
+
+  public reduce<TransformedType = Nothing>(
+    _: never,
+    initialType: TransformedType,
+  ): TransformedType {
+    return initialType
   }
 }
 

@@ -279,4 +279,18 @@ describe('Monad Maybe Test Suite', () => {
       expect(result).toBeInstanceOf(Nothing)
     })
   })
+
+  describe('reduce', () => {
+    it('should reduce Monad value', () => {
+      const monad = Maybe.of(5)
+      const reduced = monad.reduce((acc, value) => acc + value, 2)
+      expect(reduced).toBe(7)
+    })
+
+    it('should return initial value when Monad is Nothing', () => {
+      const monad = Maybe.empty()
+      const reduced = monad.reduce((_, __) => 1 + 5, 2)
+      expect(reduced).toBe(2)
+    })
+  })
 })

@@ -63,6 +63,13 @@ export class Just<Type> implements Maybe<Type> {
       data: this.value,
     }
   }
+
+  reduce<TransformedType = Type>(
+    reducer: (acc: TransformedType, item: Type) => TransformedType,
+    initialType: TransformedType,
+  ): TransformedType {
+    return reducer(initialType, this._value)
+  }
 }
 
 export function just<Type>(value: Type): Maybe<Type> {

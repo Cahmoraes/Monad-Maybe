@@ -51,4 +51,13 @@ export interface Maybe<InitialType> {
     pred: CallbackPredicate<InitialType, NextType>,
   ): Maybe<NextType>
   filter(pred: (value: InitialType) => boolean): Maybe<InitialType>
+
+  reduce<TransformedType = InitialType>(
+    reducer: (acc: TransformedType, item: InitialType) => TransformedType,
+    initialType: TransformedType,
+  ): TransformedType
+  reduce<TransformedType = InitialType>(
+    reducer: never,
+    initialType: TransformedType,
+  ): TransformedType
 }
