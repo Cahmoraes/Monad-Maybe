@@ -25,7 +25,6 @@ interface Maybe<InitialType> {
     map<TransformedType>(callbackMap: Callback<InitialType, TransformedType>): Maybe<TransformedType>;
     isNothing(): this is Nothing;
     chain<TransformedType>(callbackChain: CallbackChain<InitialType, TransformedType>): Maybe<TransformedType>;
-    orDefault<DefaultType = InitialType>(defaultValue: DefaultType): DefaultType;
     orDefault(defaultValue: InitialType): InitialType;
     orDefaultLazy(callbackDefaultLazy: CallbackDefaultLazy<InitialType>): InitialType;
     getSafe(): GetSafeReturn<InitialType>;
