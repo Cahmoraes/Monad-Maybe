@@ -1,4 +1,24 @@
+declare class Just<Type> implements Maybe<Type> {
+    private _value;
+    constructor(_value: Type);
+    isJust(): this is Just<Type>;
+    private get value();
+    isNothing(): boolean;
+    map<TransformedType>(callbackMap: Callback<Type, TransformedType>): Maybe<TransformedType>;
+    private isEmpty;
+    filter<NextType extends Type>(pred: CallbackPredicate<Type, NextType>): Maybe<NextType>;
+    chain<TransformedType>(callbackChain: CallbackChain<Type, TransformedType>): Maybe<TransformedType>;
+    private isMonadValueIsEmpty;
+    orDefault(_: Type): Type;
+    orDefaultLazy(_: never): Type;
+    getSafe(): GetSafeReturn<Type>;
+    reduce<TransformedType = Type>(reducer: (acc: TransformedType, item: Type) => TransformedType, initialType: TransformedType): TransformedType;
+    ifJust(effect: CallbackEffect<Type>): this;
+    ifNothing(_: never): this;
+}
+
 declare class Nothing implements Maybe<Nothing> {
+    isJust(): boolean;
     isNothing(): this is Nothing;
     map<TransformedType>(_: Callback<never, TransformedType>): Maybe<TransformedType>;
     chain<TransformedType>(_: CallbackChain<never, TransformedType>): Maybe<TransformedType>;
@@ -28,6 +48,7 @@ type CallbackEffectNothing = () => void;
 interface Maybe<InitialType> {
     map<TransformedType>(callbackMap: Callback<InitialType, TransformedType>): Maybe<TransformedType>;
     isNothing(): this is Nothing;
+    isJust(): this is Just<InitialType>;
     chain<TransformedType>(callbackChain: CallbackChain<InitialType, TransformedType>): Maybe<TransformedType>;
     orDefault(defaultValue: InitialType): InitialType;
     orDefaultLazy(callbackDefaultLazy: CallbackDefaultLazy<InitialType>): InitialType;
