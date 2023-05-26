@@ -168,14 +168,30 @@ const reduced_empty = empty.reduce((_, __) => 10 + 10, 2)
 console.log(reduced_empty)
 ```
 
-## to filter Monad's value using a predicate, use filter:
+## to runs an effect if Monad is Just, use ifJust:
 
-this method returns new Monad valid with your value if predicate is true, or empty Monad if predicate is false.
+this method runs an effect if monad is a Just, it receives monad's value in argument and returns the "this".
 
 ```js
-const maybe = Maybe.of(5)
-const result = maybe.filter((value) => value > 10)
+const just = Maybe.of(5)
+maybe.ifJust((value) => console.log(`success: ${value}`))
+// => success 5
 
-console.(result.isNothing())
-// => true
+const nothing = Maybe.empty()
+nothing.ifJust((value) => console.log(`success: ${value}`))
+// =>
+```
+
+## to runs an effect if Monad is Nothing, use ifNothing:
+
+this method runs an effect if monad is a Nothing, and returns the "this".
+
+```js
+const just = Maybe.of(5)
+maybe.ifNothing(() => console.log('error'))
+// =>
+
+const nothing = Maybe.empty()
+nothing.ifNothing(() => console.log('error'))
+// => error
 ```
