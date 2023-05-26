@@ -4,8 +4,9 @@ declare class Nothing implements Maybe<Nothing> {
     chain<TransformedType>(_: CallbackChain<never, TransformedType>): Maybe<TransformedType>;
     filter<Type>(_: never): Maybe<Type>;
     orDefault<DefaultType>(defaultValue: DefaultType): DefaultType;
-    orDefaultLazy<T>(callbackDefaultLazy: CallbackDefaultLazy<T>): T;
+    orDefaultLazy<DefaultType>(callbackDefaultLazy: CallbackDefaultLazy<DefaultType>): DefaultType;
     getSafe(): GetSafeReturn<never>;
+    reduce<TransformedType = Nothing>(_: never, initialType: TransformedType): TransformedType;
 }
 
 type Callback<InitialType, TransformedType> = (value: InitialType) => TransformedType;
@@ -30,6 +31,8 @@ interface Maybe<InitialType> {
     getSafe(): GetSafeReturn<InitialType>;
     filter<NextType extends InitialType>(pred: CallbackPredicate<InitialType, NextType>): Maybe<NextType>;
     filter(pred: (value: InitialType) => boolean): Maybe<InitialType>;
+    reduce<TransformedType = InitialType>(reducer: (acc: TransformedType, item: InitialType) => TransformedType, initialType: TransformedType): TransformedType;
+    reduce<TransformedType = InitialType>(reducer: never, initialType: TransformedType): TransformedType;
 }
 
 declare class MaybeImp {
