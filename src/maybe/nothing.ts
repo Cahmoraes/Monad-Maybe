@@ -1,3 +1,4 @@
+import { Just } from './just'
 import type {
   Callback,
   CallbackChain,
@@ -9,6 +10,10 @@ import type {
 } from './maybe'
 
 export class Nothing implements Maybe<Nothing> {
+  public isJust(): boolean {
+    return false
+  }
+
   public isNothing(): this is Nothing {
     return true
   }

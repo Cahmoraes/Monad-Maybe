@@ -332,4 +332,20 @@ describe('Monad Maybe Test Suite', () => {
       expect(effect).not.toHaveBeenCalled()
     })
   })
+
+  describe('isJust', () => {
+    it('should return true when Monad is a Just', () => {
+      const maybe = Maybe.of(5)
+      const result = maybe.isJust()
+
+      expect(result).toBe(true)
+    })
+
+    it('should return false when Monad is a Nothing', () => {
+      const maybe = Maybe.empty()
+      const result = maybe.isJust()
+
+      expect(result).toBe(false)
+    })
+  })
 })

@@ -11,6 +11,10 @@ import { nothing } from './nothing'
 export class Just<Type> implements Maybe<Type> {
   constructor(private _value: Type) {}
 
+  isJust(): this is Just<Type> {
+    return true
+  }
+
   private get value() {
     return this._value
   }

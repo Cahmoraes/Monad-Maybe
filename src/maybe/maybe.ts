@@ -1,3 +1,4 @@
+import { Just } from './just'
 import { Nothing } from './nothing'
 
 export type Callback<InitialType, TransformedType> = (
@@ -37,6 +38,8 @@ export interface Maybe<InitialType> {
   ): Maybe<TransformedType>
 
   isNothing(): this is Nothing
+
+  isJust(): this is Just<InitialType>
 
   chain<TransformedType>(
     callbackChain: CallbackChain<InitialType, TransformedType>,
