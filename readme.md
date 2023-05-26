@@ -106,7 +106,18 @@ console.log(monad.isNothing())
 //=> true
 ```
 
-## to get Monad's value without define default value "orDefault", use getSafe:
+## to check if the Monad is a Just use <strong>isJust</strong>:
+
+this method return a boolean. True if the Monad is a Just, else returns false.
+
+```js
+const monad = Maybe.of(5)
+
+console.log(monad.isJust())
+//=> true
+```
+
+## to get Monad's value without define default value "orDefault", use <strong>getSafe</strong>:
 
 this method return a new Object containing a property called success of type of boolean.
 This object is a Discriminated Union. That's, if the success property was true, will there is a property data containing the Monad's value. Else, will there is no have the data property.
@@ -128,7 +139,7 @@ if (!userSafe.success) {
 }
 ```
 
-## to get Monad's value using lazy default evaluation, use orDefaultLazy:
+## to get Monad's value using lazy default evaluation, use <strong>orDefaultLazy</strong>:
 
 this method returns Monad's value if it was Nothing.
 
@@ -141,7 +152,7 @@ console.log(result)
 // => { username: 'George' }
 ```
 
-## to filter Monad's value using a predicate, use filter:
+## to filter Monad's value using a predicate, use <strong>filter</strong>:
 
 this method returns new Monad valid with your value if predicate is true, or empty Monad if predicate is false.
 
@@ -153,7 +164,7 @@ console.(result.isNothing())
 // => true
 ```
 
-## to reducer Monad's value, use reduce:
+## to reducer Monad's value, use <strong>reduce</strong>:
 
 this method apply a reducer function to Monad's value, if it was Nothing, returns initial value, else returns value transformed.
 
@@ -168,7 +179,7 @@ const reduced_empty = empty.reduce((_, __) => 10 + 10, 2)
 console.log(reduced_empty)
 ```
 
-## to runs an effect if Monad is Just, use ifJust:
+## to runs an effect if Monad is Just, use <strong>ifJust</strong>:
 
 this method runs an effect if monad is a Just, it receives monad's value in argument and returns the "this".
 
@@ -182,7 +193,7 @@ nothing.ifJust((value) => console.log(`success: ${value}`))
 // =>
 ```
 
-## to runs an effect if Monad is Nothing, use ifNothing:
+## to runs an effect if Monad is Nothing, use <strong>ifNothing</strong>:
 
 this method runs an effect if monad is a Nothing, and returns the "this".
 
