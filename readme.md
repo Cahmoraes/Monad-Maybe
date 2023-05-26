@@ -152,3 +152,30 @@ const result = maybe.filter((value) => value > 10)
 console.(result.isNothing())
 // => true
 ```
+
+## to reducer Monad's value, use reduce:
+
+this method apply a reducer function to Monad's value, if it was Nothing, returns initial value, else returns value transformed.
+
+```js
+const monad = Maybe.of(5)
+const reduced = monad.reduce((acc, value) => acc + value, 2)
+console.log(reduced)
+// => 7
+
+const empty = Maybe.empty(5)
+const reduced_empty = empty.reduce((_, __) => 10 + 10, 2)
+console.log(reduced_empty)
+```
+
+## to filter Monad's value using a predicate, use filter:
+
+this method returns new Monad valid with your value if predicate is true, or empty Monad if predicate is false.
+
+```js
+const maybe = Maybe.of(5)
+const result = maybe.filter((value) => value > 10)
+
+console.(result.isNothing())
+// => true
+```
