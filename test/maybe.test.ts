@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from 'vitest'
 import Maybe from '../src/maybe/maybe-imp'
 import { Just } from '../src/maybe/just'
 import { Nothing } from '../src/maybe/nothing'
-// import { Maybe } from '../src'
 
 describe('Monad Maybe Test Suite', () => {
   it('should return an Maybe instance when use new operator', () => {
@@ -74,7 +73,7 @@ describe('Monad Maybe Test Suite', () => {
 
     it('should return default value when result null or undefined', () => {
       const maybe = Maybe.of(0)
-      const fn = () => null
+      const fn: any = () => null
 
       const result = maybe.map(fn).map(fn).orDefault(0)
       const expected = 0
@@ -105,7 +104,7 @@ describe('Monad Maybe Test Suite', () => {
       const maybe = Maybe.of(0)
       const fn = (value: number) => Maybe.of(value + 2)
 
-      const result = maybe.chain(fn).orDefault('0')
+      const result = maybe.chain(fn).orDefault(0)
       const expected = 2
 
       expect(result).toBe(expected)
@@ -113,7 +112,7 @@ describe('Monad Maybe Test Suite', () => {
 
     it('should return default value, when lift Monad value if null', () => {
       const maybe = Maybe.of(0)
-      const fn = () => Maybe.of(null)
+      const fn: any = () => Maybe.of(null)
 
       const result = maybe
         .map(() => null)
@@ -125,7 +124,8 @@ describe('Monad Maybe Test Suite', () => {
       expect(result).toBe(expected)
 
       const maybe_2 = Maybe.of(5)
-      const result_2 = maybe_2.map(() => null).orDefault('R$ 0,00')
+      const fnNull: any = () => null
+      const result_2 = maybe_2.map(fnNull).orDefault('R$ 0,00')
       expect(result_2).toBe('R$ 0,00')
     })
 
@@ -178,7 +178,8 @@ describe('Monad Maybe Test Suite', () => {
 
     it('should return Just when Monad value is empty', () => {
       const data = { username: 'John' }
-      const monad = Maybe.of(data).chain(() => Maybe.of(null))
+      const chainNull: any = () => Maybe.of(null)
+      const monad = Maybe.of(data).chain(chainNull)
       expect(monad.orDefault(10)).toBe(10)
     })
 

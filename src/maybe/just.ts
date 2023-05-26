@@ -49,7 +49,7 @@ export class Just<Type> implements Maybe<Type> {
     return result.success && this.isEmpty(result.data)
   }
 
-  public orDefault(_: never): Type {
+  public orDefault(_: Type): Type {
     return this._value
   }
 

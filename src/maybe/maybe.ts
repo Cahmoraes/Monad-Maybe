@@ -38,7 +38,6 @@ export interface Maybe<InitialType> {
     callbackChain: CallbackChain<InitialType, TransformedType>,
   ): Maybe<TransformedType>
 
-  orDefault<DefaultType = InitialType>(defaultValue: DefaultType): DefaultType
   orDefault(defaultValue: InitialType): InitialType
 
   orDefaultLazy(
