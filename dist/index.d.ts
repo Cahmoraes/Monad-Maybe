@@ -7,6 +7,8 @@ declare class Nothing implements Maybe<Nothing> {
     orDefaultLazy<DefaultType>(callbackDefaultLazy: CallbackDefaultLazy<DefaultType>): DefaultType;
     getSafe(): GetSafeReturn<never>;
     reduce<TransformedType = Nothing>(_: never, initialType: TransformedType): TransformedType;
+    ifJust(_: never): this;
+    ifNothing(effect: CallbackEffectNothing): this;
 }
 
 type Callback<InitialType, TransformedType> = (value: InitialType) => TransformedType;
@@ -21,6 +23,8 @@ type GetSafeSuccessReturn<InitialType> = {
 type GetSafeReturn<InitialType> = GetSafeSuccessReturn<InitialType> | GetSafeErrorReturn;
 type CallbackDefaultLazy<InitialType> = () => InitialType;
 type CallbackPredicate<InitialType, NextType extends InitialType> = (value: InitialType) => value is NextType;
+type CallbackEffect<InitialType> = (value: InitialType) => void;
+type CallbackEffectNothing = () => void;
 interface Maybe<InitialType> {
     map<TransformedType>(callbackMap: Callback<InitialType, TransformedType>): Maybe<TransformedType>;
     isNothing(): this is Nothing;
@@ -32,6 +36,8 @@ interface Maybe<InitialType> {
     filter(pred: (value: InitialType) => boolean): Maybe<InitialType>;
     reduce<TransformedType = InitialType>(reducer: (acc: TransformedType, item: InitialType) => TransformedType, initialType: TransformedType): TransformedType;
     reduce<TransformedType = InitialType>(reducer: never, initialType: TransformedType): TransformedType;
+    ifJust(effect: CallbackEffect<InitialType>): this;
+    ifNothing(effect: CallbackEffectNothing): this;
 }
 
 declare class MaybeImp {
