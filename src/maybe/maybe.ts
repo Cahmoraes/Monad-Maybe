@@ -27,6 +27,10 @@ export type CallbackPredicate<InitialType, NextType extends InitialType> = (
   value: InitialType,
 ) => value is NextType
 
+export type CallbackEffect<InitialType> = (value: InitialType) => void
+
+export type CallbackEffectNothing = () => void
+
 export interface Maybe<InitialType> {
   map<TransformedType>(
     callbackMap: Callback<InitialType, TransformedType>,
@@ -59,4 +63,8 @@ export interface Maybe<InitialType> {
     reducer: never,
     initialType: TransformedType,
   ): TransformedType
+
+  ifJust(effect: CallbackEffect<InitialType>): this
+
+  ifNothing(effect: CallbackEffectNothing): this
 }

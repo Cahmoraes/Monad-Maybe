@@ -2,6 +2,8 @@ import type {
   Callback,
   CallbackChain,
   CallbackDefaultLazy,
+  CallbackEffect,
+  CallbackEffectNothing,
   GetSafeReturn,
   Maybe,
 } from './maybe'
@@ -48,6 +50,15 @@ export class Nothing implements Maybe<Nothing> {
     initialType: TransformedType,
   ): TransformedType {
     return initialType
+  }
+
+  public ifJust(_: never): this {
+    return this
+  }
+
+  ifNothing(effect: CallbackEffectNothing): this {
+    effect()
+    return this
   }
 }
 

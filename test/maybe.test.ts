@@ -294,4 +294,42 @@ describe('Monad Maybe Test Suite', () => {
       expect(reduced).toBe(2)
     })
   })
+
+  describe('ifJust', () => {
+    it('should run an effect if Monad is Just', () => {
+      const maybe = Maybe.of(5)
+      const effect = vi.fn((value) => console.log(`effect: ${value}`))
+      maybe.ifJust(effect)
+
+      expect(effect).toHaveBeenCalled()
+      expect(effect).toHaveBeenCalledWith(5)
+    })
+
+    it('should not run an effect if Monad is Nothing', () => {
+      const maybe = Maybe.empty()
+      const effect = vi.fn((value) => console.log(`effect: ${value}`))
+      maybe.ifJust(effect)
+
+      expect(effect).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('ifNothing', () => {
+    it('should run an effect if Monad is Nothing', () => {
+      const maybe = Maybe.empty()
+      const effect = vi.fn(() => console.log('effect'))
+      maybe.ifNothing(effect)
+
+      expect(effect).toHaveBeenCalled()
+      expect(effect).toHaveBeenCalledWith()
+    })
+
+    it('should not run an effect if Monad is Just', () => {
+      const maybe = Maybe.of(5)
+      const effect = vi.fn(() => console.log(`effect`))
+      maybe.ifNothing(effect)
+
+      expect(effect).not.toHaveBeenCalled()
+    })
+  })
 })

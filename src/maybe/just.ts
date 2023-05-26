@@ -1,6 +1,7 @@
 import type {
   Callback,
   CallbackChain,
+  CallbackEffect,
   CallbackPredicate,
   GetSafeReturn,
   Maybe,
@@ -69,6 +70,15 @@ export class Just<Type> implements Maybe<Type> {
     initialType: TransformedType,
   ): TransformedType {
     return reducer(initialType, this._value)
+  }
+
+  public ifJust(effect: CallbackEffect<Type>): this {
+    effect(this._value)
+    return this
+  }
+
+  public ifNothing(_: never): this {
+    return this
   }
 }
 
