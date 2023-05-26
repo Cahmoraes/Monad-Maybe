@@ -64,7 +64,7 @@ export class Just<Type> implements Maybe<Type> {
     }
   }
 
-  reduce<TransformedType = Type>(
+  public reduce<TransformedType = Type>(
     reducer: (acc: TransformedType, item: Type) => TransformedType,
     initialType: TransformedType,
   ): TransformedType {
