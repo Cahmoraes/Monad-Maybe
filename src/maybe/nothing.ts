@@ -59,7 +59,7 @@ export class Nothing implements Maybe<Nothing> {
     return this
   }
 
-  ifNothing(effect: CallbackEffectNothing): this {
+  public ifNothing(effect: CallbackEffectNothing): this {
     effect()
     return this
   }

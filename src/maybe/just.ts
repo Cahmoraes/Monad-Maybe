@@ -11,7 +11,7 @@ import { nothing } from './nothing'
 export class Just<Type> implements Maybe<Type> {
   constructor(private _value: Type) {}
 
-  isJust(): this is Just<Type> {
+  public isJust(): this is Just<Type> {
     return true
   }
 
@@ -35,9 +35,9 @@ export class Just<Type> implements Maybe<Type> {
   }
 
   public filter<NextType extends Type>(
-    pred: CallbackPredicate<Type, NextType>,
+    predicate: CallbackPredicate<Type, NextType>,
   ): Maybe<NextType> {
-    return pred(this.value) ? just(this.value) : nothing()
+    return predicate(this.value) ? just(this.value) : nothing()
   }
 
   public chain<TransformedType>(
@@ -55,11 +55,11 @@ export class Just<Type> implements Maybe<Type> {
   }
 
   public orDefault(_: Type): Type {
-    return this._value
+    return this.value
   }
 
   public orDefaultLazy(_: never): Type {
-    return this._value
+    return this.value
   }
 
   public getSafe(): GetSafeReturn<Type> {
@@ -77,7 +77,7 @@ export class Just<Type> implements Maybe<Type> {
   }
 
   public ifJust(effect: CallbackEffect<Type>): this {
-    effect(this._value)
+    effect(this.value)
     return this
   }
 
