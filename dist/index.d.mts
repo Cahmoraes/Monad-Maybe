@@ -6,7 +6,7 @@ declare class Just<Type> implements Maybe<Type> {
     isNothing(): boolean;
     map<TransformedType>(callbackMap: Callback<Type, TransformedType>): Maybe<TransformedType>;
     private isEmpty;
-    filter<NextType extends Type>(pred: CallbackPredicate<Type, NextType>): Maybe<NextType>;
+    filter<NextType extends Type>(predicate: CallbackPredicate<Type, NextType>): Maybe<NextType>;
     chain<TransformedType>(callbackChain: CallbackChain<Type, TransformedType>): Maybe<TransformedType>;
     private isMonadValueEmpty;
     orDefault(_: Type): Type;
