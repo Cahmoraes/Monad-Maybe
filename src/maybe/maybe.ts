@@ -1,5 +1,5 @@
-import { Just } from './just'
-import { Nothing } from './nothing'
+import type { Just } from './just'
+import type { Nothing } from './nothing'
 
 export type Callback<InitialType, TransformedType> = (
   value: InitialType,
