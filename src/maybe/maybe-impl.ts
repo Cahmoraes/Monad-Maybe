@@ -3,6 +3,8 @@ import { just } from './just'
 import { nothing } from './nothing'
 
 export default class MaybeImp {
+  private constructor() {}
+
   public static of<Type>(value: Type): Maybe<Type> {
     return just<Type>(value)
   }

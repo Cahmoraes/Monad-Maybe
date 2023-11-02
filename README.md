@@ -15,7 +15,7 @@ const maybe_2 = Maybe.empty()
 
 ## to create an empty Maybe, use static method Maybe.empty()
 
-In React, we need to work with immutable data when we're using states. May Be.empty() is useful when we need define an initial statue to our data. Mainly when that data are loaded by asynchronous.
+In React, we need to work with immutable data when we're using states. Maybe.empty() is useful when we need define an initial state to our data. Mainly when that data are loaded by asynchronous.
 Maybe.empty() return a Maybe with null wrapped. But its inference is "any" just for TypeScript to ignore the generic type parameter.
 
 ```js
@@ -77,7 +77,7 @@ console.log(result_2)
 ```js
 import { Maybe } from '@cahmoraes93/maybe'
 
-const maybe_1 = new Maybe(5)
+const maybe_1 = Maybe.of(5)
 const result_1 = maybe_1
   .map((value) => value + 5)
   .map((value) =>
@@ -174,9 +174,10 @@ const reduced = monad.reduce((acc, value) => acc + value, 2)
 console.log(reduced)
 // => 7
 
-const empty = Maybe.empty(5)
+const empty = Maybe.empty()
 const reduced_empty = empty.reduce((_, __) => 10 + 10, 2)
 console.log(reduced_empty)
+// => 2
 ```
 
 ## to runs an effect if Monad is Just, use <strong>ifJust</strong>:
