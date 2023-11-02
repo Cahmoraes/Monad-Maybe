@@ -1,1 +1,1 @@
-export { default as Maybe } from './maybe/maybe-imp'
+export { default as Maybe } from './maybe/maybe-impl'

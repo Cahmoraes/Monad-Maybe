@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import Maybe from '../src/maybe/maybe-imp'
+import Maybe from '../src/maybe/maybe-impl'
 import { Just } from '../src/maybe/just'
 import { Nothing } from '../src/maybe/nothing'
 
