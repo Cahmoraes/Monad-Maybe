@@ -62,6 +62,7 @@ interface Maybe<InitialType> {
 }
 
 declare class MaybeImp {
+    private constructor();
     static of<Type>(value: Type): Maybe<Type>;
     static empty<Type>(): Maybe<Type>;
 }
