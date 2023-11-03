@@ -1,5 +1,118 @@
 'use strict';
 
-var u=class{isJust(){return !1}isNothing(){return !0}map(e){return t()}chain(e){return t()}filter(e){return t()}orDefault(e){return e}orDefaultLazy(e){return e()}getSafe(){return {success:!1}}reduce(e,r){return r}ifJust(e){return this}ifNothing(e){return e(),this}};function t(){return new u}var i=class{constructor(e){this._value=e;}isJust(){return !0}get value(){return this._value}isNothing(){return !1}map(e){let r=e(this._value);return this.isEmpty(r)?t():n(r)}isEmpty(e){return e==null}filter(e){return e(this.value)?n(this.value):t()}chain(e){let r=e(this._value);return this.isMonadValueEmpty(r)?t():r}isMonadValueEmpty(e){let r=e.getSafe();return r.success&&this.isEmpty(r.data)}orDefault(e){return this.value}orDefaultLazy(e){return this.value}getSafe(){return {success:!0,data:this.value}}reduce(e,r){return e(r,this._value)}ifJust(e){return e(this.value),this}ifNothing(e){return this}};function n(a){return new i(a)}var p=class{constructor(){}static of(e){return n(e)}static empty(){return t()}};
+// src/maybe/nothing.ts
+var Nothing = class {
+  isJust() {
+    return false;
+  }
+  isNothing() {
+    return true;
+  }
+  map(_) {
+    return nothing();
+  }
+  chain(_) {
+    return nothing();
+  }
+  filter(_) {
+    return nothing();
+  }
+  orDefault(defaultValue) {
+    return defaultValue;
+  }
+  orDefaultLazy(callbackDefaultLazy) {
+    return callbackDefaultLazy();
+  }
+  getSafe() {
+    return {
+      success: false
+    };
+  }
+  reduce(_, initialType) {
+    return initialType;
+  }
+  ifJust(_) {
+    return this;
+  }
+  ifNothing(effect) {
+    effect();
+    return this;
+  }
+};
+function nothing() {
+  return new Nothing();
+}
 
-exports.Maybe = p;
+// src/maybe/just.ts
+var Just = class {
+  constructor(_value) {
+    this._value = _value;
+  }
+  isJust() {
+    return true;
+  }
+  get value() {
+    return this._value;
+  }
+  isNothing() {
+    return false;
+  }
+  map(callbackMap) {
+    const result = callbackMap(this._value);
+    return this.isEmpty(result) ? nothing() : just(result);
+  }
+  isEmpty(aValue) {
+    return aValue === void 0 || aValue === null;
+  }
+  filter(predicate) {
+    return predicate(this.value) ? just(this.value) : nothing();
+  }
+  chain(callbackChain) {
+    const aNewMonad = callbackChain(this._value);
+    return this.isMonadValueEmpty(aNewMonad) ? nothing() : aNewMonad;
+  }
+  isMonadValueEmpty(aMonad) {
+    const result = aMonad.getSafe();
+    return result.success && this.isEmpty(result.data);
+  }
+  orDefault(_) {
+    return this.value;
+  }
+  orDefaultLazy(_) {
+    return this.value;
+  }
+  getSafe() {
+    return {
+      success: true,
+      data: this.value
+    };
+  }
+  reduce(reducer, initialType) {
+    return reducer(initialType, this._value);
+  }
+  ifJust(effect) {
+    effect(this.value);
+    return this;
+  }
+  ifNothing(_) {
+    return this;
+  }
+};
+function just(value) {
+  return new Just(value);
+}
+
+// src/maybe/maybe-impl.ts
+var MaybeImp = class {
+  /* c8 ignore next */
+  constructor() {
+  }
+  static of(value) {
+    return just(value);
+  }
+  static empty() {
+    return nothing();
+  }
+};
+
+exports.Maybe = MaybeImp;
