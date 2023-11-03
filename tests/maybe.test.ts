@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import Maybe from '../src/maybe/maybe-impl'
+import { MaybeType, Maybe } from '../src'
 import { Just } from '../src/maybe/just'
 import { Nothing } from '../src/maybe/nothing'
 
@@ -283,7 +283,7 @@ describe('Monad Maybe Test Suite', () => {
 
   describe('reduce', () => {
     it('should reduce Monad value', () => {
-      const monad = Maybe.of(5)
+      const monad: MaybeType<number> = Maybe.of(5)
       const reduced = monad.reduce((acc, value) => acc + value, 2)
       expect(reduced).toBe(7)
     })

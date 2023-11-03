@@ -13,6 +13,14 @@ const maybe_1 = Maybe.of(0)
 const maybe_2 = Maybe.empty()
 ```
 
+or using Interface MaybeType:
+
+```js
+const maybe_1: MaybeType<number> = Maybe.of(0)
+// or
+const maybe_2: MaybeType<number> = Maybe.empty()
+```
+
 ## to create an empty Maybe, use static method Maybe.empty()
 
 In React, we need to work with immutable data when we're using states. Maybe.empty() is useful when we need define an initial state to our data. Mainly when that data are loaded by asynchronous.
@@ -27,7 +35,7 @@ console.log(maybe.isNothing()) // true
 Maybe.empty() causes TypeScript's type checking to ignore the initial state type:
 
 ```ts
-const [user, setUser] = useState<Maybe<User>>(MaybeEmpty.empty())
+const [user, setUser] = useState<MaybeType<User>>(MaybeEmpty.empty())
 ```
 
 ## to <strong>Map</strong> Monad value, use the map method:

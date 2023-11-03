@@ -67,4 +67,4 @@ declare class MaybeImp {
     static empty<Type>(): Maybe<Type>;
 }
 
-export { MaybeImp as Maybe };
+export { MaybeImp as Maybe, Maybe as MaybeType };
