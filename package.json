@@ -1,6 +1,6 @@
 {
   "name": "@cahmoraes93/maybe",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "main": "./dist/index.js",
   "types": "./dist/index.d.mts",
   "author": "Cahmoraes <ike.moraes93@gmail.com>",
