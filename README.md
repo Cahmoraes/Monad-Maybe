@@ -144,6 +144,7 @@ if (!userSafe.success) {
   // handle when Monad's value is null.
 } else {
   // handle when Monad's value is valid.
+  console.log(userSafe.data.username) // => George
 }
 ```
 
